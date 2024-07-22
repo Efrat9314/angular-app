@@ -1,0 +1,48 @@
+<form [formGroup]="addStudentForm" *ngIf="addStudent">
+    <div class="card" style="width: 15rem;">
+        <h4>Add new Student</h4>
+        <div class="input-group flex-colum" style="width: 15%;">
+            <input type="text" placeholder="firstName" class="input-group-text" formControlName="firstName" #name1>
+            <ng-container *ngIf="addStudentForm.controls['firstName'].errors">
+                <div *ngIf="addStudentForm.controls['firstName'].errors['required']&&addStudentForm.controls['firstName'].dirty"  class="alert alert-info">required!</div>
+                <div *ngIf="addStudentForm.controls['firstName'].errors['minLength']"  class="alert alert-info">at least two letters!</div>
+            </ng-container>
+            <input type="text" placeholder="lastName" class="input-group-text" formControlName="lastName">
+            <input type="text" placeholder="phone" class="input-group-text" formControlName="phone">
+            <ng-container *ngIf="addStudentForm.controls['phone'].errors">
+                <div *ngIf="addStudentForm.controls['phone'].errors['required']&&addStudentForm.controls['phone'].touched"  class="alert alert-info">required!</div>
+                <div *ngIf="addStudentForm.controls['phone'].errors['pattern']"  class="alert alert-info">wrong phone number</div>
+            </ng-container>
+            <input type="number" placeholder="avg" class="input-group-text" formControlName="avg">
+            <ng-container *ngIf="addStudentForm.controls['avg'].errors">
+                <div *ngIf="addStudentForm.controls['avg'].errors['required']&&addStudentForm.controls['avg'].touched"  class="alert alert-info">required!</div>
+                <div *ngIf="addStudentForm.controls['avg'].errors['min']"  class="alert alert-info">you didnt pass the test!</div>
+            </ng-container>
+            <select class="form-select" formControlName="track">
+                <option *ngFor="let track of tracksList" [value]="track">{{track}}</option>
+            </select>
+         </div>
+         <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="2022" formControlName="year" id="year2022">
+            <label class="form-check-label" for="year2022">2022</label>
+        </div>
+        
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="2023" formControlName="year" id="year2023">
+            <label class="form-check-label" for="year2023">2023</label>
+        </div>
+        
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="2024" formControlName="year" id="year2024">
+            <label class="form-check-label" for="year2024">2024</label>
+        </div>
+        
+        <div [ngSwitch]="addStudentForm.controls['year'].value">
+            <div class="alert alert-success" *ngSwitchCase="'2022'">you're in the begining of the studiss!</div>
+            <div class="alert alert-success" *ngSwitchCase="'2023'">you're in the middle of the studiss!</div>
+            <div class="alert alert-success text-danger" *ngSwitchCase="'2024'">you're in the end of the studiss!</div>
+        </div> 
+        <input type="submit" value="Save" class="btn btn-info" (click)="saveNewStudent()" [disabled]="!addStudentForm.valid">
+    </div>
+    <div class="alert">{{addStudentForm.value | json}}</div>
+</form>

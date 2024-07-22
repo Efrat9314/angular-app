@@ -1,0 +1,29 @@
+<div class="card" style="width: 25rem;" *ngIf="currentStudent">
+    <form [formGroup]="studentForm">
+      <h3>Student Details: {{ currentStudent.firstName }} {{ currentStudent.lastName }}</h3>
+      <p>First Name:</p>
+      <input type="text" formControlName="firstName"/> 
+      <p>Last Name:</p>
+      <input type="text" formControlName="lastName"/>
+      <p>Phone:</p>
+      <input type="text" formControlName="phone"/>
+      <p>Average:</p>
+      <input type="text" formControlName="avg" />
+      <p>Track:</p>
+      <select class="form-select" formControlName="track">
+        <option *ngFor="let track of tracksList" [value]="track">{{ track }}</option>
+      </select>
+      <ng-container *ngIf="!currentStudent.isActive">
+        <p>Is Active: {{ currentStudent.isActive }}</p>
+        <p>Date of Leaving: {{ currentStudent.dateLiving }}</p>
+      </ng-container><br>
+      <div formGroupName="absenceDaysStudent" class="container">
+        <h6>Add Absence Days: {{ showTotaldays(currentStudent.id) }}</h6>
+        <input type="text" placeholder="Start Date" formControlName="startDay">
+        <input type="number" placeholder="Number of Days" formControlName="numDays">
+      </div>
+      <input type="submit" value="Save" class="btn btn-info" (click)="updateDetails()">
+      <!-- <p>{{ studentForm.value | json }}</p>  -->
+    </form>
+  </div>
+  

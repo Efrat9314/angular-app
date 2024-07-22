@@ -1,0 +1,17 @@
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="let stu of studentsList"
+    [class.list-group-item-danger]="!stu.isActive" 
+    [class.list-group-item-success]="studentToDisplay&&stu.id==studentToDisplay.id">
+        <div class="row">
+            <p class="col-1">{{stu.id}}</p>
+            <p class="col-2">{{stu.firstName}} {{stu.lastName}}</p>
+            <p class="col-2">Total days of absence: {{totalAbsenceDays(stu.id)}}</p>
+            <button class="btn btn-primary col-1" (click)="editStudentDetails(stu)">edit</button>
+            <button class="btn btn-success col-1" (click)="deleteStudent(stu)">delete</button>
+        </div>
+    </li>
+</ul>
+<button class="btn btn-primary" (click)="addStudent()">addStudent</button>
+<app-student-details [currentStudent]="studentToDisplay" (onUpdateStudent)="update($event)"></app-student-details>
+<app-student-details-form [addStudent]="studentToAdd" (onSaveStudent)="save($event)" ></app-student-details-form>
+
